@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Category;
 use app\models\CategoryPost;
+use app\models\PostSearch;
 use Yii;
 use app\models\Post;
 use yii\data\ActiveDataProvider;
@@ -35,12 +36,18 @@ class PostController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Post::find(),
-        ]);
+        $searchModel = new PostSearch();
+        if (empty(Yii::$app->request->getQueryParam('PostSearch'))) {
+            $dataProvider = new ActiveDataProvider([
+                'query' => Post::find(),
+            ]);
+        } else {
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);;
+        }
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel
         ]);
     }
 
