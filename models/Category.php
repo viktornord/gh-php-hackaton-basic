@@ -11,7 +11,7 @@ use yii\db\ActiveRecord;
  * @property integer $id
  * @property string $name
  *
- * @property CategoryPost[] $categoryPosts
+ * @property mixed posts
  */
 class Category extends ActiveRecord
 {
@@ -46,7 +46,7 @@ class Category extends ActiveRecord
     }
 
     public function getPosts() {
-        $this->hasMany(Category::className(), ['id' => 'post_id'])
+        return $this->hasMany(Post::className(), ['id' => 'post_id'])
             ->viaTable('category_post', ['category_id' => 'id']);
 
 

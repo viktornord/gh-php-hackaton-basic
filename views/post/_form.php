@@ -1,5 +1,6 @@
 <?php
 
+use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -7,7 +8,6 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\Post */
 /* @var $form yii\widgets\ActiveForm */
 /* @var $category_names */
-/* @var \app\models\CategoryPost $category_post */
 ?>
 
 <div class="post-form">
@@ -24,8 +24,16 @@ use yii\widgets\ActiveForm;
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
-    <?= $form->field($model, 'categories_id')->dropDownList($category_names, [
-        'multiple' => 'true'
+    <?= $form->field($model, 'categories_id')->widget(Select2::classname(), [
+        'data' => $category_names,
+        'language' => 'de',
+        'options' => [
+            'placeholder' => 'Select a state ...',
+            'multiple' => 'true'
+        ],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
     ])->label('Category') ?>
 
     <?php ActiveForm::end(); ?>
