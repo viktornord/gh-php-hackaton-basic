@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "posts".
@@ -14,8 +15,10 @@ use Yii;
  *
  * @property CategoryPost[] $categoryPosts
  */
-class Post extends \yii\db\ActiveRecord
+class Post extends ActiveRecord
 {
+    public $categories_id;
+
     /**
      * @inheritdoc
      */
@@ -32,7 +35,8 @@ class Post extends \yii\db\ActiveRecord
         return [
             [['body'], 'string'],
             [['name'], 'string', 'max' => 255],
-            [['author'], 'string', 'max' => 15]
+            [['author'], 'string', 'max' => 15],
+            [['categories_id'], 'safe']
         ];
     }
 
@@ -52,8 +56,9 @@ class Post extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCategoryPosts()
-    {
-        return $this->hasMany(CategoryPost::className(), ['post_id' => 'id']);
+    public function getCategories(){
+
+        return $this->hasMany(Category::className(),['id'=>'category_id'])
+            ->viaTable('category_post',['post_id'=>'id']);
     }
 }
