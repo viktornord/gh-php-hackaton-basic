@@ -3,22 +3,23 @@
 namespace app\models;
 
 use Yii;
-use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "category".
  *
  * @property integer $id
  * @property string $name
+ *
+ * @property CategoryPost[] $categoryPosts
  */
-class Category extends ActiveRecord
+class Category extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return '{{%category}}';
+        return 'category';
     }
 
     /**
@@ -27,6 +28,7 @@ class Category extends ActiveRecord
     public function rules()
     {
         return [
+            [['name'], 'required'],
             [['name'], 'string', 'max' => 255]
         ];
     }
@@ -40,5 +42,13 @@ class Category extends ActiveRecord
             'id' => 'ID',
             'name' => 'Name',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCategoryPosts()
+    {
+        return $this->hasMany(CategoryPost::className(), ['category_id' => 'id']);
     }
 }

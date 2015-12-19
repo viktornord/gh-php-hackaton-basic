@@ -10,9 +10,9 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * PostsController implements the CRUD actions for Post model.
+ * PostController implements the CRUD actions for Post model.
  */
-class PostsController extends Controller
+class PostController extends Controller
 {
     public function behaviors()
     {
