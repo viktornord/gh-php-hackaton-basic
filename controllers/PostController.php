@@ -90,12 +90,21 @@ class PostController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->categories_id = ArrayHelper::getColumn($model->categories, 'id');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            /** @var Category[] $categories */
+            $model->unlinkAll('categories', true);
+            $categories = Category::find()
+                ->where(['id'=>$model->categories_id])->all();
+            foreach($categories as $category){
+                $model->link('categories', $category);
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'category_names' => ArrayHelper::map(Category::find()->all(), 'id', 'name')
             ]);
         }
     }
@@ -108,7 +117,10 @@ class PostController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+
+        $model = $this->findModel($id);
+        $model->unlinkAll('categories', true);
+        $model->delete();
 
         return $this->redirect(['index']);
     }

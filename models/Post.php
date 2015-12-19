@@ -14,6 +14,7 @@ use yii\db\ActiveRecord;
  * @property string $body
  *
  * @property CategoryPost[] $categoryPosts
+ * @property mixed categories
  */
 class Post extends ActiveRecord
 {
