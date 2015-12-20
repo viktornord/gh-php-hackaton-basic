@@ -4,14 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Post */
-/* @var $comment app\models\PostComment */
+/* @var $model app\models\PostComment */
 
-$this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Posts', 'url' => ['index']];
+$this->title = $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Post Comments', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="post-view">
+<div class="post-comment-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -30,16 +29,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'name',
-            'author',
+            'author_name',
+            'post_id',
             'body:ntext',
         ],
-    ]) ?>
-    <h4>Leave your comment:</h4>
-
-    <?= $this->render('../post-comment/_form', [
-        'model' => $comment,
-//        'action' => $
     ]) ?>
 
 </div>

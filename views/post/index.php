@@ -30,7 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'author',
             [
-                'attribute' => 'categories',
+                'attribute' => 'category_names',
+                'label' => 'Categories',
                 'value' => function ($model) {
                     return implode(', ', ArrayHelper::getColumn($model->categories, 'name'));
                 }

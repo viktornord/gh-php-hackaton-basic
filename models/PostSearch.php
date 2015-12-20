@@ -6,12 +6,15 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Post;
+use yii\helpers\ArrayHelper;
 
 /**
  * PostSearch represents the model behind the search form about `app\models\Post`.
  */
 class PostSearch extends Post
 {
+
+    public $category_names;
     /**
      * @inheritdoc
      */
@@ -19,7 +22,7 @@ class PostSearch extends Post
     {
         return [
             [['id'], 'integer'],
-            [['name', 'author', 'body'], 'safe'],
+            [['category_names', 'name', 'author', 'body'], 'safe'],
         ];
     }
 
@@ -47,6 +50,7 @@ class PostSearch extends Post
             'query' => $query,
         ]);
 
+//        $query->joinWith(['categories']);
         $this->load($params);
 
         if (!$this->validate()) {
@@ -54,12 +58,12 @@ class PostSearch extends Post
             // $query->where('0=1');
             return $dataProvider;
         }
-
-        $query->andFilterWhere([
-            'id' => $this->id,
-        ]);
-
-        $query->andFilterWhere(['like', 'name', $this->name])
+//var_dump($this->name);
+//        exit;
+        $query
+            ->andFilterWhere(['id' => $this->id])
+//            ->andFilterWhere(['like', 'Category.name', $this->category_names])
+            ->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'author', $this->author])
             ->andFilterWhere(['like', 'body', $this->body]);
 
