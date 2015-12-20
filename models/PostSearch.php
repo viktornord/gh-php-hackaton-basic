@@ -44,7 +44,7 @@ class PostSearch extends Post
      */
     public function search($params)
     {
-        $query = Post::find();
+        $query = Post::find()->joinWith('categories');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -62,7 +62,7 @@ class PostSearch extends Post
 //        exit;
         $query
             ->andFilterWhere(['id' => $this->id])
-//            ->andFilterWhere(['like', 'Category.name', $this->category_names])
+            ->andFilterWhere(['like', 'category.name', $this->category_names])
             ->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'author', $this->author])
             ->andFilterWhere(['like', 'body', $this->body]);
