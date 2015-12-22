@@ -43,16 +43,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
             'author_name',
-            'post_id',
             'body:ntext',
 
             [
                 'class' => 'yii\grid\ActionColumn',
-//                'urlCreator' => function ($action, $model, $key, $index) {
-//                        return 'index.php?r=post-comment/'.$action.'&id='.$key;
-//                },
                 'controller' => 'post-comment'
             ],
         ]
