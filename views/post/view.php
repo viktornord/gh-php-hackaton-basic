@@ -50,9 +50,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
             [
                 'class' => 'yii\grid\ActionColumn',
-                'urlCreator' => function ($action, $model, $key, $index) {
-                        return 'index.php?r=post-comment/'.$action.'&id='.$key;
-                }
+//                'urlCreator' => function ($action, $model, $key, $index) {
+//                        return 'index.php?r=post-comment/'.$action.'&id='.$key;
+//                },
+                'controller' => 'post-comment'
             ],
         ]
     ]); ?>
