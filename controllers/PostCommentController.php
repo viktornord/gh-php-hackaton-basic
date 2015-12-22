@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Post;
 use Yii;
 use app\models\PostComment;
 use yii\data\ActiveDataProvider;
@@ -61,14 +62,8 @@ class PostCommentController extends Controller
     public function actionCreate()
     {
         $model = new PostComment();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
+        $model->load(Yii::$app->request->post()) && $model->save();
+        return $this->redirect(['post/view', 'id' => $model->post_id]);
     }
 
     /**
@@ -98,8 +93,8 @@ class PostCommentController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
 
+        $this->findModel($id)->delete();
         return $this->redirect(['index']);
     }
 

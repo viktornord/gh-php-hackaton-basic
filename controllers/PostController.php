@@ -60,10 +60,14 @@ class PostController extends Controller
     public function actionView($id)
     {
         $comment = new PostComment();
+        $comment->post_id = $id;
 
         return $this->render('view', [
             'model' => $this->findModel($id),
             'comment' => $comment,
+            'commentsDataProvider' => new ActiveDataProvider([
+                'query' => PostComment::find()->where(['post_id' => $id]),
+            ])
         ]);
     }
 

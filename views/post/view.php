@@ -1,11 +1,13 @@
 <?php
 
+use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Post */
 /* @var $comment app\models\PostComment */
+/* @var $commentsDataProvider yii\data\ActiveDataProvider */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Posts', 'url' => ['index']];
@@ -35,11 +37,31 @@ $this->params['breadcrumbs'][] = $this->title;
             'body:ntext',
         ],
     ]) ?>
+    <h3>Comments</h3>
+    <?= GridView::widget([
+        'dataProvider' => $commentsDataProvider,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+
+            'id',
+            'author_name',
+            'post_id',
+            'body:ntext',
+
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'urlCreator' => function ($action, $model, $key, $index) {
+                        return 'index.php?r=post-comment/'.$action.'&id='.$key;
+                }
+            ],
+        ]
+    ]); ?>
+
     <h4>Leave your comment:</h4>
 
     <?= $this->render('../post-comment/_form', [
         'model' => $comment,
-//        'action' => $
+        'actionPostComment' => 'post-comment/create'
     ]) ?>
 
 </div>

@@ -6,15 +6,17 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\models\PostComment */
 /* @var $form yii\widgets\ActiveForm */
+/* @var $actionPostComment String */
 ?>
 
 <div class="post-comment-form">
-
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'action' => isset($actionPostComment) ? [$actionPostComment] : '',
+    ]); ?>
 
     <?= $form->field($model, 'author_name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'post_id')->textInput() ?>
+    <?= Html::activeHiddenInput($model, 'post_id') ?>
 
     <?= $form->field($model, 'body')->textarea(['rows' => 6]) ?>
 
